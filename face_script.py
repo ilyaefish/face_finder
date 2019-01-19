@@ -2,7 +2,7 @@ import face_recognition
 from shutil import copyfile
 import os
 import shutil
-
+import glob
 import subprocess
 
 PATH = os.getcwd()
@@ -11,7 +11,9 @@ ALL_PHOTOS = PATH + "/all_photos/"
 MY_PHOTOS = PATH + "/my_photos/"
 MY_FOUND_PIC = PATH + "/my_found_pic/"
 TEMP_FOLDER = PATH + "/tmp/"
-# This is the tolerance (or threshold) of the algorithm. Higher tolerance tells the algorithm to be less strict, while lower means the opposite
+"""This is the tolerance (or threshold) of the algorithm. 
+Higher tolerance tells the algorithm to be less strict, while lower means the opposite
+"""
 TOLARANCE = 0.7
 YOUR_FACE_PIC = MY_PHOTOS + "ilya.jpg"
 
@@ -57,7 +59,7 @@ for i in range(1, file_count):
             results = face_recognition.compare_faces([y], face_encoding, TOLARANCE)
 
             # Save the image to a seperate folder if there is a match
-            if results[0] == True:
+            if results[0]:
                 print("Found one")
                 copyfile(file_name, MY_FOUND_PIC + str(i) + ".jpg")
                 break
