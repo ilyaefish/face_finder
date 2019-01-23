@@ -3,9 +3,7 @@ from shutil import copyfile
 import os
 import shutil
 import glob
-import subprocess
 from PIL import Image
-from progressbar import ProgressBar
 from tqdm import tqdm
 from pathlib import Path
 
@@ -16,45 +14,42 @@ MY_PHOTOS = PATH + "/my_photos/"
 MY_FOUND_PIC = PATH + "/my_found_pic/"
 TEMP_FOLDER = PATH + "/tmp/"
 
-# """This is the tolerance (or threshold) of the algorithm.
-# Higher tolerance tells the algorithm to be less strict, while lower means the opposite
-# """
+"""This is the tolerance (or threshold) of the algorithm.
+Higher tolerance tells the algorithm to be less strict, while lower means the opposite
+"""
 TOLARANCE = 0.6
-#
-# print("Deleting old tmp images")
-#
-# os.system('rm -rf %s/*,jpg' % TEMP_FOLDER)
-#
-# print("Copying your images to tmp file\n")
-#
-# for root, dirs, files in tqdm(os.walk(ALL_PHOTOS)):
-#     for file in files:
-#         if file.endswith(".jpg"):
-#             # print(os.path.join(root, file))
-#             shutil.copy2(os.path.join(root, file), TEMP_FOLDER)
-#
 
-#
-# file_count = len(os.listdir(TEMP_FOLDER))
-# print("You have " + str(file_count) + " pictures")
-#
-# print("Resizing your pictures in tmp folder if bigger then 0.5 Mb")
-# # # Iterate through all your pictures
-# my_tmp_files = glob.glob(TEMP_FOLDER + "*.jpg")
-#
-# for pic in tqdm(my_tmp_files):
-#     image = Image.open(pic)
-#     image_size = int(len(image.fp.read()))
-#     if image_size > 1000000:
-#         width, height = image.size
-#         quartersizedIm = image.resize((int(width / 2), int(height / 2)))
-#     quartersizedIm.save(pic.replace(".jpg", "-small.jpg"))
-#     os.remove(pic)
+print("Deleting old tmp images")
+
+os.system('rm -rf %s/*,jpg' % TEMP_FOLDER)
+
+print("Copying your images to tmp file\n")
+
+for root, dirs, files in tqdm(os.walk(ALL_PHOTOS)):
+    for file in files:
+        if file.endswith(".jpg"):
+            # print(os.path.join(root, file))
+            shutil.copy2(os.path.join(root, file), TEMP_FOLDER)
+
+file_count = len(os.listdir(TEMP_FOLDER))
+print("You have " + str(file_count) + " pictures")
+
+print("Resizing your pictures in tmp folder if bigger then 0.5 Mb")
+# # Iterate through all your pictures
+my_tmp_files = glob.glob(TEMP_FOLDER + "*.jpg")
+
+for pic in tqdm(my_tmp_files):
+    image = Image.open(pic)
+    image_size = int(len(image.fp.read()))
+    if image_size > 1000000:
+        width, height = image.size
+        quartersizedIm = image.resize((int(width / 2), int(height / 2)))
+    quartersizedIm.save(pic.replace(".jpg", "-small.jpg"))
+    os.remove(pic)
 
 print("Deleting old my_found_pics")
 #
 os.system('rm -rf %s/*,jpg' % MY_FOUND_PIC)
-
 
 print("Searching for your pics")
 my_face_encoding = []
