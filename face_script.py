@@ -17,7 +17,7 @@ TEMP_FOLDER = PATH + "/tmp/"
 """This is the tolerance (or threshold) of the algorithm.
 Higher tolerance tells the algorithm to be less strict, while lower means the opposite
 """
-TOLARANCE = 0.6
+TOLARANCE = 0.5
 
 print("Deleting old tmp images")
 
